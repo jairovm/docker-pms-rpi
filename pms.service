@@ -12,16 +12,21 @@ RestartSec=5s
 Environment=CONTAINER=%p
 Environment=DOCKER_IMAGE=docker-pms-rpi:1.5.5
 Environment=DOCKER_NAMESPACE_IMAGES=jairovm
+Environment=PMS_FOLDER=/pms
+Environment=DEVICE=/dev/sda
 
 ExecStartPre=-/usr/bin/docker kill ${CONTAINER}
 ExecStartPre=-/usr/bin/docker rm ${CONTAINER}
+ExecStartPre=/bin/mkdir -p ${PMS_FOLDER}
+ExecStartPre=/bin/bash -c 'mountpoint -q ${PMS_FOLDER} || mount ${DEVICE} ${PMS_FOLDER}'
+ExecStartPre=/bin/bash -c 'find "${PMS_FOLDER}/config" -name "plexmediaserver.pid" | xargs -I{} rm -rf {}'
 ExecStart=/usr/bin/docker run \
   --name ${CONTAINER} \
   --network=host \
   -p 32400:32400 \
-  -v /pms/config:/config \
-  -v /pms/data:/data \
-  -v /pms/transcode:/transcode \
+  -v ${PMS_FOLDER}/config:/config \
+  -v ${PMS_FOLDER}/data:/data \
+  -v ${PMS_FOLDER}/transcode:/transcode \
   ${DOCKER_NAMESPACE_IMAGES}/${DOCKER_IMAGE}
 
 ExecStop=/usr/bin/docker stop ${CONTAINER}
