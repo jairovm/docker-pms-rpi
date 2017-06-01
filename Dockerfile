@@ -4,7 +4,7 @@ RUN apt-get update \
     && apt-get install -y binutils libexpat1-dev libc6 wget \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-ENV PMS_VERSION 1.5.5.3634-995f1dead
+ENV PMS_VERSION 1.7.2.3878-8088811b8
 
 RUN wget https://downloads.plex.tv/plex-media-server/${PMS_VERSION}/plexmediaserver-ros6-binaries-annapurna_${PMS_VERSION}_armel.deb -O plex.deb \
   && mkdir -p /usr/lib/plexmediaserver \
