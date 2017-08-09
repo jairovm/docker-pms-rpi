@@ -10,7 +10,7 @@ Restart=on-failure
 RestartSec=5s
 
 Environment=CONTAINER=%p
-Environment=DOCKER_IMAGE=docker-pms-rpi:1.7.2
+Environment=DOCKER_IMAGE=docker-pms-rpi:1.8.0
 Environment=DOCKER_NAMESPACE_IMAGES=jairovm
 Environment=PMS_FOLDER=/pms
 Environment=DEVICE=/dev/sda
