@@ -23,6 +23,7 @@ ExecStartPre=/bin/bash -c 'find "${PMS_FOLDER}/config" -name "plexmediaserver.pi
 ExecStart=/usr/bin/docker run \
   --name ${CONTAINER} \
   --network=host \
+  --device /dev/vchiq:/dev/vchiq \
   -p 32400:32400 \
   -v ${PMS_FOLDER}/config:/config \
   -v ${PMS_FOLDER}/data:/data \
